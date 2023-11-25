@@ -1,0 +1,103 @@
+{
+	"info": {
+		"_postman_id": "9b084282-17b4-4dd6-8d1b-15237ca2f347",
+		"name": "ReqRes Workflow",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23631937",
+		"_collection_link": "https://solar-meadow-226366-1.postman.co/workspace/myWorkspace~0a256a05-5237-422d-8354-adf4c6b9e888/collection/23631937-9b084282-17b4-4dd6-8d1b-15237ca2f347?action=share&source=collection_link&creator=23631937"
+	},
+	"item": [
+		{
+			"name": "myFolder",
+			"item": [
+				{
+					"name": "GETRequest",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"console.log(\"Pre-request script at Request Level\")"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"console.log(\"Test script at Folder Level\")"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://reqres.in/api/users",
+							"protocol": "https",
+							"host": [
+								"reqres",
+								"in"
+							],
+							"path": [
+								"api",
+								"users"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"console.log(\"Pre-request script at Folder Level\")"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"console.log(\"Test script at Folder Level\")"
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"console.log(\"Pre-request script at Collection Level\")"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"console.log(\"Test script at Collection Level\")"
+				]
+			}
+		}
+	]
+}

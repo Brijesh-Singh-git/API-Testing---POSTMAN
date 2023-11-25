@@ -1,0 +1,421 @@
+{
+	"info": {
+		"_postman_id": "e4931679-6651-4405-9bf7-d27d964e453a",
+		"name": "StudentAPIs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23631937",
+		"_collection_link": "https://solar-meadow-226366-1.postman.co/workspace/myWorkspace~0a256a05-5237-422d-8354-adf4c6b9e888/collection/23631937-e4931679-6651-4405-9bf7-d27d964e453a?action=share&source=collection_link&creator=23631937"
+	},
+	"item": [
+		{
+			"name": "Single Student Data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status Code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Successful POST Request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([201,202]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content Type header is present\", function () {\r",
+							"    pm.response.to.have.header('Content-Type');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content Type header is application/json\", function () {   \r",
+							"                pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json; charset=utf-8\");\r",
+							"    });\r",
+							"\r",
+							"pm.test(\"Content-Length header\", () => {   \r",
+							"                pm.expect(pm.response.headers.get(\"Content-Length\")).to.eql(\"158\");\r",
+							"    });\r",
+							"\r",
+							" pm.test(\"Cookie ‘Language’ is present\", () => {\r",
+							"    pm.expect(pm.cookies.has(\"language\")).to.be.true;\r",
+							"});\r",
+							"   \r",
+							"\r",
+							"pm.test(\"Cookie Language has value 1\", () => {\r",
+							"    pm.expect(pm.cookies.get(\"language\")).to.eql(\"en-gb\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", () => {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(100);\r",
+							"}); \r",
+							"\r",
+							"const jsonData = pm.response.json();  //Global Variable \r",
+							"\r",
+							"pm.test('Test Data type of the response' , () => {\r",
+							"\tpm.expect(jsonData).to.be.an('object');\r",
+							"    pm.expect(jsonData.name).to.be.an('string');\r",
+							"    pm.expect(jsonData.id).to.be.an('number');\r",
+							"    pm.expect(jsonData.courses).to.be.an('array');\r",
+							"\r",
+							"});\r",
+							"\r",
+							"pm.test('Test array properties' , () => {\r",
+							"    //To validate single value\r",
+							"    pm.expect(jsonData.courses).to.include(\"Java\");\r",
+							"\r",
+							"    //To validate multiple values\r",
+							"    pm.expect(jsonData.courses).to.have.members([\"Java\", \"Selenium\", \"Web Development\"]);\r",
+							"\r",
+							"\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test('Values of fileds in response' , () => {\r",
+							"    pm.expect(jsonData.id).to.eql(1);\r",
+							"    pm.expect(jsonData.name).to.eql('John Doe');\r",
+							"    pm.expect(jsonData.location).to.eql('india');\r",
+							"    pm.expect(jsonData.phone).to.eql('123-456-7890');\r",
+							"    pm.expect(jsonData.courses[0]).to.eql('Java');\r",
+							"    pm.expect(jsonData.courses[1]).to.eql('Selenium');\r",
+							"    pm.expect(jsonData.courses[2]).to.eql('Web Development');\r",
+							"\r",
+							"\r",
+							"});\r",
+							"\r",
+							"//JSON Schema Validation \r",
+							"\r",
+							"//store the schema into a variable\r",
+							"var schema = {\r",
+							"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+							"  \"type\": \"object\",\r",
+							"  \"properties\": {\r",
+							"    \"id\": {\r",
+							"      \"type\": \"integer\"\r",
+							"    },\r",
+							"    \"name\": {\r",
+							"      \"type\": \"string\"\r",
+							"    },\r",
+							"    \"location\": {\r",
+							"      \"type\": \"string\"\r",
+							"    },\r",
+							"    \"phone\": {\r",
+							"      \"type\": \"string\"\r",
+							"    },\r",
+							"    \"courses\": {\r",
+							"      \"type\": \"array\",\r",
+							"      \"items\": [\r",
+							"        {\r",
+							"          \"type\": \"string\"\r",
+							"        },\r",
+							"        {\r",
+							"          \"type\": \"string\"\r",
+							"        },\r",
+							"        {\r",
+							"          \"type\": \"string\"\r",
+							"        }\r",
+							"      ]\r",
+							"    }\r",
+							"  },\r",
+							"  \"required\": [\r",
+							"    \"id\",\r",
+							"    \"name\",\r",
+							"    \"location\",\r",
+							"    \"phone\",\r",
+							"    \"courses\"\r",
+							"  ]\r",
+							"}\r",
+							"\r",
+							"\r",
+							"pm.test('Schema is Valid' , () => {\r",
+							"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;\r",
+							"\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/students/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"students",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "All Students Data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status Code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Successful POST Request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([201,202]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content Type header is present\", function () {\r",
+							"    pm.response.to.have.header('Content-Type');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content Type header is application/json\", function () {   \r",
+							"                pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json; charset=utf-8\");\r",
+							"    });\r",
+							"\r",
+							"pm.test(\"Content-Length header\", () => {   \r",
+							"                pm.expect(pm.response.headers.get(\"Content-Length\")).to.eql(\"158\");\r",
+							"    });\r",
+							"\r",
+							" pm.test(\"Cookie ‘Language’ is present\", () => {\r",
+							"    pm.expect(pm.cookies.has(\"language\")).to.be.true;\r",
+							"});\r",
+							"   \r",
+							"\r",
+							"pm.test(\"Cookie Language has value 1\", () => {\r",
+							"    pm.expect(pm.cookies.get(\"language\")).to.eql(\"en-gb\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", () => {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(100);\r",
+							"}); "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/students",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"students"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a New Student ",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status Code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Successful POST Request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([201,202]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content Type header is present\", function () {\r",
+							"    pm.response.to.have.header('Content-Type');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content Type header is application/json\", function () {   \r",
+							"                pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json; charset=utf-8\");\r",
+							"    });\r",
+							"\r",
+							"pm.test(\"Content-Length header\", () => {   \r",
+							"                pm.expect(pm.response.headers.get(\"Content-Length\")).to.eql(\"158\");\r",
+							"    });\r",
+							"\r",
+							" pm.test(\"Cookie ‘Language’ is present\", () => {\r",
+							"    pm.expect(pm.cookies.has(\"language\")).to.be.true;\r",
+							"});\r",
+							"   \r",
+							"\r",
+							"pm.test(\"Cookie Language has value 1\", () => {\r",
+							"    pm.expect(pm.cookies.get(\"language\")).to.eql(\"en-gb\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", () => {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(100);\r",
+							"}); "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"name\": \"David Bellick\", \"location\": \"Saudi Arabia\", \"phone\": \"15656\", \"courses\": [\"DevOps\", \"CyberSecurity\", \"Python\"]}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/students",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"students"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update the Student",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status Code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Successful POST Request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([201,202]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content Type header is present\", function () {\r",
+							"    pm.response.to.have.header('Content-Type');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content Type header is application/json\", function () {   \r",
+							"                pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json; charset=utf-8\");\r",
+							"    });\r",
+							"\r",
+							"pm.test(\"Content-Length header\", () => {   \r",
+							"                pm.expect(pm.response.headers.get(\"Content-Length\")).to.eql(\"158\");\r",
+							"    });\r",
+							"\r",
+							" pm.test(\"Cookie ‘Language’ is present\", () => {\r",
+							"    pm.expect(pm.cookies.has(\"language\")).to.be.true;\r",
+							"});\r",
+							"   \r",
+							"\r",
+							"pm.test(\"Cookie Language has value 1\", () => {\r",
+							"    pm.expect(pm.cookies.get(\"language\")).to.eql(\"en-gb\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", () => {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(100);\r",
+							"}); "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"name\": \"Rohan Das\", \"location\": \"United Kingdom\", \"phone\": \"110011\", \"courses\": [\"DevOps\", \"CyberSecurity\", \"Python\"]}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/students/8",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"students",
+						"8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete the Student Data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status Code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Successful POST Request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([201,202]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content Type header is present\", function () {\r",
+							"    pm.response.to.have.header('Content-Type');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content Type header is application/json\", function () {   \r",
+							"                pm.expect(pm.response.headers.get(\"Content-Type\")).to.eql(\"application/json; charset=utf-8\");\r",
+							"    });\r",
+							"\r",
+							"pm.test(\"Content-Length header\", () => {   \r",
+							"                pm.expect(pm.response.headers.get(\"Content-Length\")).to.eql(\"158\");\r",
+							"    });\r",
+							"\r",
+							" pm.test(\"Cookie ‘Language’ is present\", () => {\r",
+							"    pm.expect(pm.cookies.has(\"language\")).to.be.true;\r",
+							"});\r",
+							"   \r",
+							"\r",
+							"pm.test(\"Cookie Language has value 1\", () => {\r",
+							"    pm.expect(pm.cookies.get(\"language\")).to.eql(\"en-gb\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", () => {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(100);\r",
+							"}); "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/students/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"students",
+						"3"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

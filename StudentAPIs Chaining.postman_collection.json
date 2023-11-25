@@ -1,0 +1,120 @@
+{
+	"info": {
+		"_postman_id": "a8d7f0c3-3ec1-4cb8-bf8e-a0eb9be20940",
+		"name": "StudentAPIs Chaining",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23631937",
+		"_collection_link": "https://solar-meadow-226366-1.postman.co/workspace/myWorkspace~0a256a05-5237-422d-8354-adf4c6b9e888/collection/23631937-a8d7f0c3-3ec1-4cb8-bf8e-a0eb9be20940?action=share&source=collection_link&creator=23631937"
+	},
+	"item": [
+		{
+			"name": "Create a New Student ",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Store the response into a variable\r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"\r",
+							"//Extract the ID now and store into Environemnt variable \r",
+							"pm.environment.set(\"id\", jsonData.id); \r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Mark PArser\",\r\n    \"location\": \"Singapore\",\r\n    \"phone\": \"778895\",\r\n    \"courses\": [\r\n        \"Dev\",\r\n        \"Secuirty\",\r\n        \"Java\"\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/students",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"students"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Single Student Data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/students/{{id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"students",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete the Student Data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/students/{{id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"students",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

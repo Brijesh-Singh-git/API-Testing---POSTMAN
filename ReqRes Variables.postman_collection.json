@@ -1,0 +1,188 @@
+{
+	"info": {
+		"_postman_id": "f1186ac2-72bb-4ba5-9495-a03637602495",
+		"name": "ReqRes Variables",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23631937",
+		"_collection_link": "https://solar-meadow-226366-1.postman.co/workspace/myWorkspace~0a256a05-5237-422d-8354-adf4c6b9e888/collection/23631937-f1186ac2-72bb-4ba5-9495-a03637602495?action=share&source=collection_link&creator=23631937"
+	},
+	"item": [
+		{
+			"name": "GETRequest",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"//Local Variable\r",
+							"\r",
+							"pm.variables.set(\"url_local\", \"https://reqres.in\"); \r",
+							"\r",
+							"//Global Variable \r",
+							"pm.globals.set(\"userid_global\", \"2\");\r",
+							"\r",
+							"//Environment Variable \r",
+							"pm.environment.set(\"userid_dev_environment\", \"2\") \r",
+							"\r",
+							"//Colelction Variables\r",
+							"pm.collectionVariables.set(\"userid_collection\", \"2\") \r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Print the data of the variables\r",
+							"\r",
+							"console.log(pm.globals.get(\"userid_global\"));\r",
+							"console.log(pm.environment.get(\"userid_dev_environment\"));\r",
+							"console.log(pm.collectionVariables.get(\"userid_collection\"));\r",
+							"console.log(pm.variables.get(\"userid_global\"));\r",
+							"\r",
+							"\r",
+							"//Delete the Variable after gettig the response\r",
+							"\r",
+							"pm.globals.unset(\"userid_global\")\r",
+							"\r",
+							"//Environment Variable \r",
+							"pm.environment.unset(\"userid_dev_environment\") \r",
+							"\r",
+							"//Colelction Variables\r",
+							"pm.collectionVariables.unset(\"userid_collection\") \r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url_local}}/api/users?page={{userid_global}}",
+					"host": [
+						"{{url_local}}"
+					],
+					"path": [
+						"api",
+						"users"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "{{userid_global}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POSTRequest",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"name\": \"brijesh\", \r\n   \"job\" : \"test engineer\" \r\n   } ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url_global}}/api/users",
+					"host": [
+						"{{url_global}}"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUTRequest",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"name\": \"Brijesh\", \r\n\r\n    \"job\": \"Software Tester\"  \r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url_global}}/api/users/823",
+					"host": [
+						"{{url_global}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"823"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETERequest",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url_global}}/api/users/823",
+					"host": [
+						"{{url_global}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"823"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url_collection",
+			"value": "https://reqres.in",
+			"type": "string"
+		}
+	]
+}
